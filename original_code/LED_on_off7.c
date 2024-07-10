@@ -17,7 +17,7 @@ void main(void) {
 
     while (1) {
         LED = !LED;  // LEDの状態を反転
-        Timer0_Delay_ms(1000);  // 1秒待機
+        Timer0_Delay_ms(10000);  // 1秒待機
     }
 }
 
@@ -30,11 +30,11 @@ void Timer0_Init(void) {
     TMOD = 0x01;
 }
 
-void Timer0_Delay_ms(unsigned int ms) {//for文1回で1ms   2535カウントする
+void Timer0_Delay_ms(unsigned int ms) {//for文1回で1ms   2435カウントする F67C
     unsigned int i;
     for (i = 0; i < ms; i++) {
-        TH0 = 0xFC;  // 初期値設定 (65535 - 1000) -> 1ms
-        TL0 = 0x17;
+        TH0 = 0xF6;  // 初期値設定 (65535 - 1000) -> 1ms
+        TL0 = 0x7C;
         TCON_TR0 = 1;  // Timer0をスタート
         while (!TCON_TF0);  // Timer1のオーバーフローを待機
         TCON_TF0 = 0;  // Timer1のオーバーフローフラグをクリア
